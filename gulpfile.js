@@ -30,11 +30,11 @@ gulp.task('clean', function() {
 
 gulp.task('pug',function() {
 	return gulp.src('./views/*.pug')
-	.pipe(pug({
-	   pretty: true
-	}))
-	//.pipe(pug().on('error', pug.logError))
-	.pipe(gulp.dest('./public/webapp'))
+	// .pipe(pug({
+	//    pretty: true
+	// }))
+	// //.pipe(pug().on('error', pug.logError))
+	// .pipe(gulp.dest('./public/webapp'))
 	.pipe(browserSync.reload({ stream: true }));
 });
 

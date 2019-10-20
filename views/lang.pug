@@ -1,0 +1,9 @@
+extends layout.pug
+block header
+block sidebar
+block content
+  form(action='/lang' method='post')
+    textarea#langText.form-control(rows='15' name='LANG_TEXT')
+      | #{result}
+    button#langBtn.btn.btn-lg.btn-primary(type='button') 다국어 변환
+  

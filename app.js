@@ -7,6 +7,7 @@ var logger        = require('morgan');
 var mongoose      = require('mongoose');
 
 var indexRouter = require('./routes/index');
+var langRouter  = require('./routes/lang');
 
 var app = express();
 
@@ -24,7 +25,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use('/', indexRouter);
+app.use('/',     indexRouter)
+app.use('/lang', langRouter)
 
 // [ CONFIGURE mongoose ]
 
