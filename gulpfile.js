@@ -15,7 +15,7 @@ gulp.task('default', function (callback) {
 		sequence('clean',
 				 'pug',
 				 ['scss','module'],
-			     'browser-sync',
+			     ['browser-sync','watch'],
 			     'nodemon',
 			callback
 		);
@@ -93,8 +93,15 @@ gulp.task('pug',function() {
 gulp.task('browser-sync', function() {
 	browserSync.init(null, {
 		proxy: "http://localhost:5000",
-        files: ["public/**/*.*"]
+		files: ["public/**/*.*"],
+		open: false
 	});
+});
+
+gulp.task('watch', function () {
+	// gulp.watch('src/js/*.js', 		['js:combine']); 
+	gulp.watch('src/sass/*.scss', 	['scss']); 
+	gulp.watch('views/*.pug', 		['pug']); 
 });
 
 gulp.task('nodemon', function (cb) {
