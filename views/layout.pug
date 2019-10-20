@@ -6,7 +6,7 @@ html(lang='en')
     meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
     meta(name='description', content='')
     meta(name='author', content='')
-    title Simple Sidebar - Start Bootstrap Template
+    title 개발 모음
     // Bootstrap core CSS
     link(href='vendor/bootstrap/css/bootstrap.min.css', rel='stylesheet')
     // Custom styles for this template
@@ -16,7 +16,7 @@ html(lang='en')
     #wrapper.d-flex
       // Sidebar
       #sidebar-wrapper.bg-light.border-right
-        .sidebar-heading Start Bootstrap 
+        .sidebar-heading 개발 모음
         .list-group.list-group-flush
           a.list-group-item.list-group-item-action.bg-light(href='#') #{title}
           a.list-group-item.list-group-item-action.bg-light(href='#') Shortcuts
@@ -54,8 +54,4 @@ html(lang='en')
       script(src='vendor/jquery/jquery.min.js')
       script(src='vendor/bootstrap/js/bootstrap.bundle.min.js')
       // Menu Toggle Script
-      script.
-        $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-        });
+      script(src='js/script.min.js')

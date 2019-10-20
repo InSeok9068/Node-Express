@@ -2,19 +2,22 @@
 
 var gulp 			= require('gulp');
 var browserSync 	= require('browser-sync').create();
+var merge 			= require("merge-stream");
+var sequence 		= require('run-sequence');
+var del 			= require("del");
 var nodemon 		= require('gulp-nodemon');
 var scss    		= require('gulp-sass');
-var sequence 		= require('run-sequence');
 var sourcemaps  	= require('gulp-sourcemaps');
-var del 			= require("del");
-var merge 			= require("merge-stream");
 var pug 			= require('gulp-pug');
 var watch    		= require('gulp-watch');
+var concat 			= require('gulp-concat');
+var uglify 			= require('gulp-uglify'); 
+var rename 			= require('gulp-rename');
 
 gulp.task('default', function (callback) {
 		sequence('clean',
 				 'pug',
-				 ['scss','module'],
+				 ['scss','js','module'],
 			     ['browser-sync','watch'],
 			     'nodemon',
 			callback
@@ -23,6 +26,16 @@ gulp.task('default', function (callback) {
 
 gulp.task('clean', function() {
 	return del(["public/"]);
+});
+
+gulp.task('pug',function() {
+	return gulp.src('./views/*.pug')
+	.pipe(pug({
+	   pretty: true
+	}))
+	//.pipe(pug().on('error', pug.logError))
+	.pipe(gulp.dest('./public/webapp'))
+	.pipe(browserSync.reload({ stream: true }));
 });
 
 gulp.task('module', function() {
@@ -38,6 +51,15 @@ gulp.task('module', function() {
 	.pipe(gulp.dest('./public/vendor/jquery'))
 	
 	return merge(bootstrap, jquery);
+});
+
+gulp.task('js', function () {
+	return gulp.src(['src/js/*.js']) 
+   .pipe(concat('script.js')) 
+   .pipe(gulp.dest('public/js')) 
+   .pipe(uglify()) 
+   .pipe(rename('script.min.js')) 
+   .pipe( gulp.dest('public/js'));
 });
 
 var scssOptions = { 
@@ -80,16 +102,6 @@ gulp.task('scss', function () {
 	.pipe(browserSync.reload({ stream: true }))
 });
 
-gulp.task('pug',function() {
-	return gulp.src('./views/*.pug')
-	.pipe(pug({
-	   pretty: true
-	}))
-	//.pipe(pug().on('error', pug.logError))
-	.pipe(gulp.dest('./public/webapp'))
-	.pipe(browserSync.reload({ stream: true }));
-});
-
 gulp.task('browser-sync', function() {
 	browserSync.init(null, {
 		proxy: "http://localhost:5000",
@@ -99,7 +111,7 @@ gulp.task('browser-sync', function() {
 });
 
 gulp.task('watch', function () {
-	// gulp.watch('src/js/*.js', 		['js:combine']); 
+	gulp.watch('src/js/*.js', 		['js']); 
 	gulp.watch('src/sass/*.scss', 	['scss']); 
 	gulp.watch('views/*.pug', 		['pug']); 
 });
