@@ -13,6 +13,7 @@ var watch    		= require('gulp-watch');
 var concat 			= require('gulp-concat');
 var uglify 			= require('gulp-uglify'); 
 var rename 			= require('gulp-rename');
+var babel 		  = require('gulp-babel');
 
 gulp.task('default', function (callback) {
 		sequence('clean',
@@ -55,7 +56,12 @@ gulp.task('module', function() {
 
 gulp.task('js', function () {
 	return gulp.src(['src/js/*.js']) 
-   .pipe(concat('script.js')) 
+	 .pipe(sourcemaps.init())
+	 .pipe(babel({
+			presets: ['@babel/env']
+		}))
+	 .pipe(concat('script.js')) 
+	 .pipe(sourcemaps.write())
    .pipe(gulp.dest('public/js')) 
    .pipe(uglify()) 
    .pipe(rename('script.min.js')) 
