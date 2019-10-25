@@ -7,7 +7,8 @@ $('#langBtn').click(function(){
   findLangTag(langText)
   
   for(let obj of langList){
-    console.log(obj.get("msgkey") + " " + obj.get("nullvalue"))
+    //console.log(obj.get("msgkey") + " | " + obj.get("nullvalue"))
+    console.table(obj)
   }
 });
 
