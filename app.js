@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 
 const indexRouter = require("./routes/index");
 const langRouter = require("./routes/lang");
+const packageRouter = require("./routes/package");
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use(bodyParser.json());
 
 app.use("/", indexRouter);
 app.use("/lang", langRouter);
+app.use("/package", packageRouter);
 
 // [ CONFIGURE mongoose ]
 
@@ -38,9 +40,7 @@ db.once("open", () => {
   console.log("Connected to mongod server");
 });
 
-mongoose.connect(
-  "mongodb+srv://node_1:node_1@cluster0-rkn4e.mongodb.net/test?retryWrites=true&w=majority"
-);
+mongoose.connect("mongodb+srv://node_1:node_1@cluster0-rkn4e.mongodb.net/test?retryWrites=true&w=majority");
 
 // catch 404 and forward to error handler
 app.use(next => {
