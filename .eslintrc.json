@@ -8,9 +8,12 @@
     //"extends": [ "eslint:recommended", "prettier"], 
     //"extends": [ "airbnb", "prettier"],
     // airbnb-base
-    "extends": ["plugin:prettier/recommended"],
+    "extends": ["airbnb-base","plugin:prettier/recommended"],
     "plugins": ["prettier"], 
     "rules": {
-        "prettier/prettier": "error"
+        "prettier/prettier": "error",
+        "no-console" : "off",
+        "consistent-return" : "warn",
+        "no-else-return" : "off"
     }
 }

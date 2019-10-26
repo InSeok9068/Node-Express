@@ -1,21 +1,19 @@
-"use strict";
+const gulp = require("gulp");
+const browserSync = require("browser-sync").create();
+const merge = require("merge-stream");
+const sequence = require("run-sequence");
+const del = require("del");
+const nodemon = require("gulp-nodemon");
+const scss = require("gulp-sass");
+const sourcemaps = require("gulp-sourcemaps");
+// const pug = require("gulp-pug");
+const watch = require("gulp-watch");
+const concat = require("gulp-concat");
+const uglify = require("gulp-uglify");
+const rename = require("gulp-rename");
+const babel = require("gulp-babel");
 
-var gulp = require("gulp");
-var browserSync = require("browser-sync").create();
-var merge = require("merge-stream");
-var sequence = require("run-sequence");
-var del = require("del");
-var nodemon = require("gulp-nodemon");
-var scss = require("gulp-sass");
-var sourcemaps = require("gulp-sourcemaps");
-var pug = require("gulp-pug");
-var watch = require("gulp-watch");
-var concat = require("gulp-concat");
-var uglify = require("gulp-uglify");
-var rename = require("gulp-rename");
-var babel = require("gulp-babel");
-
-gulp.task("default", function(callback) {
+gulp.task("default", callback => {
   sequence(
     "clean",
     "pug",
@@ -26,11 +24,11 @@ gulp.task("default", function(callback) {
   );
 });
 
-gulp.task("clean", function() {
+gulp.task("clean", () => {
   return del(["public/"]);
 });
 
-gulp.task("pug", function() {
+gulp.task("pug", () => {
   return (
     gulp
       .src("./views/*.pug")
@@ -43,21 +41,21 @@ gulp.task("pug", function() {
   );
 });
 
-gulp.task("module", function() {
+gulp.task("module", () => {
   // Bootstrap
-  var bootstrap = gulp
+  const bootstrap = gulp
     .src("./node_modules/bootstrap/dist/**/*")
     .pipe(gulp.dest("./public/vendor/bootstrap"));
 
   // jQuery
-  var jquery = gulp
+  const jquery = gulp
     .src(["./node_modules/jquery/dist/*", "!./node_modules/jquery/dist/core.js"])
     .pipe(gulp.dest("./public/vendor/jquery"));
 
   return merge(bootstrap, jquery);
 });
 
-gulp.task("js", function() {
+gulp.task("js", () => {
   return gulp
     .src(["src/js/*.js"])
     .pipe(sourcemaps.init())
@@ -74,7 +72,7 @@ gulp.task("js", function() {
     .pipe(gulp.dest("public/js"));
 });
 
-var scssOptions = {
+const scssOptions = {
   /** * outputStyle (Type : String , Default : nested)
    * * CSS의 컴파일 결과 코드스타일 지정
    * * Values : nested, expanded, compact, compressed */
@@ -104,7 +102,7 @@ var scssOptions = {
   sourceComments: true
 };
 
-gulp.task("scss", function() {
+gulp.task("scss", () => {
   return (
     gulp
       // SCSS 파일을 읽어온다.
@@ -121,7 +119,7 @@ gulp.task("scss", function() {
   );
 });
 
-gulp.task("browser-sync", function() {
+gulp.task("browser-sync", () => {
   browserSync.init(null, {
     proxy: "http://localhost:5000",
     files: ["public/**/*.*"],
@@ -129,18 +127,18 @@ gulp.task("browser-sync", function() {
   });
 });
 
-gulp.task("watch", function() {
+gulp.task("watch", () => {
   gulp.watch("src/js/*.js", ["js"]);
   gulp.watch("src/sass/*.scss", ["scss"]);
   gulp.watch("views/*.pug", ["pug"]);
 });
 
-gulp.task("nodemon", function(cb) {
-  var started = false;
+gulp.task("nodemon", cb => {
+  let started = false;
 
   return nodemon({
     script: "app.js"
-  }).on("start", function() {
+  }).on("start", () => {
     // to avoid nodemon being started multiple times
     // thanks @matthisk
     if (!started) {
