@@ -28,9 +28,7 @@ const findLangTag = langText => {
       if (langTag.includes("msgkey")) {
         let msgKeyFirstIndex = langTag.indexOf("msgkey");
         let msgKeyMidIndex = langTag.substr(msgKeyFirstIndex).indexOf("=") + 2;
-        let msgKeyLastIndex = langTag
-          .substr(msgKeyFirstIndex + msgKeyMidIndex)
-          .indexOf("'");
+        let msgKeyLastIndex = langTag.substr(msgKeyFirstIndex + msgKeyMidIndex).indexOf("'");
         langMap.set(
           "msgkey",
           langTag.substring(
@@ -41,8 +39,7 @@ const findLangTag = langText => {
       }
       if (langTag.includes("nullvalue")) {
         let nullValueFirstIndex = langTag.indexOf("nullvalue");
-        let nullValueMidIndex =
-          langTag.substr(nullValueFirstIndex).indexOf("=") + 2;
+        let nullValueMidIndex = langTag.substr(nullValueFirstIndex).indexOf("=") + 2;
         let nullValueLastIndex = langTag
           .substr(nullValueFirstIndex + nullValueMidIndex)
           .indexOf("'");
@@ -58,9 +55,7 @@ const findLangTag = langText => {
       if (langTag.includes("msgkey")) {
         let msgKeyFirstIndex = langTag.indexOf("msgkey");
         let msgKeyMidIndex = langTag.substr(msgKeyFirstIndex).indexOf("=") + 2;
-        let msgKeyLastIndex = langTag
-          .substr(msgKeyFirstIndex + msgKeyMidIndex)
-          .indexOf('"');
+        let msgKeyLastIndex = langTag.substr(msgKeyFirstIndex + msgKeyMidIndex).indexOf('"');
         langMap.set(
           "msgkey",
           langTag.substring(
@@ -71,8 +66,7 @@ const findLangTag = langText => {
       }
       if (langTag.includes("nullvalue")) {
         let nullValueFirstIndex = langTag.indexOf("nullvalue");
-        let nullValueMidIndex =
-          langTag.substr(nullValueFirstIndex).indexOf("=") + 2;
+        let nullValueMidIndex = langTag.substr(nullValueFirstIndex).indexOf("=") + 2;
         let nullValueLastIndex = langTag
           .substr(nullValueFirstIndex + nullValueMidIndex)
           .indexOf('"');

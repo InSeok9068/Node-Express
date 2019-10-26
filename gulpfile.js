@@ -51,10 +51,7 @@ gulp.task("module", function() {
 
   // jQuery
   var jquery = gulp
-    .src([
-      "./node_modules/jquery/dist/*",
-      "!./node_modules/jquery/dist/core.js"
-    ])
+    .src(["./node_modules/jquery/dist/*", "!./node_modules/jquery/dist/core.js"])
     .pipe(gulp.dest("./public/vendor/jquery"));
 
   return merge(bootstrap, jquery);
