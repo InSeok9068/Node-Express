@@ -14,14 +14,7 @@ const rename = require("gulp-rename");
 const babel = require("gulp-babel");
 
 gulp.task("default", callback => {
-  sequence(
-    "clean",
-    "pug",
-    ["scss", "js", "module"],
-    ["browser-sync", "watch"],
-    "nodemon",
-    callback
-  );
+  sequence("clean", "pug", ["scss", "js", "module"], ["browser-sync", "watch"], "nodemon", callback);
 });
 
 gulp.task("clean", () => {
@@ -43,14 +36,10 @@ gulp.task("pug", () => {
 
 gulp.task("module", () => {
   // Bootstrap
-  const bootstrap = gulp
-    .src("./node_modules/bootstrap/dist/**/*")
-    .pipe(gulp.dest("./public/vendor/bootstrap"));
+  const bootstrap = gulp.src("./node_modules/bootstrap/dist/**/*").pipe(gulp.dest("./public/vendor/bootstrap"));
 
   // jQuery
-  const jquery = gulp
-    .src(["./node_modules/jquery/dist/*", "!./node_modules/jquery/dist/core.js"])
-    .pipe(gulp.dest("./public/vendor/jquery"));
+  const jquery = gulp.src(["./node_modules/jquery/dist/*", "!./node_modules/jquery/dist/core.js"]).pipe(gulp.dest("./public/vendor/jquery"));
 
   return merge(bootstrap, jquery);
 });
