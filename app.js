@@ -2,12 +2,15 @@ const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
+const session = require("express-session");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
 const helmet = require("helmet");
+const passport = require("passport");
 
 const indexRouter = require("./routes/index");
+const loginRouter = require("./routes/login");
 const langRouter = require("./routes/lang");
 const packageRouter = require("./routes/package");
 
@@ -28,9 +31,30 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.use(
+  session({
+    secret: "key",
+    cookie: { maxAge: 60 * 60 * 1000 },
+    resave: false,
+    saveUninitialized: true
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+const authenticateUser = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    next();
+  } else {
+    res.status(301).redirect("/login");
+  }
+};
+
 app.use("/", indexRouter);
-app.use("/lang", langRouter);
-app.use("/package", packageRouter);
+app.use("/login", loginRouter);
+app.use("/lang", authenticateUser, langRouter);
+app.use("/package", authenticateUser, packageRouter);
 
 // [ CONFIGURE mongoose ]
 
